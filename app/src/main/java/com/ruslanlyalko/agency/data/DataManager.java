@@ -10,5 +10,7 @@ import com.ruslanlyalko.agency.data.models.User;
  */
 public interface DataManager {
 
+    MutableLiveData<User> getMyUser();
+
     MutableLiveData<User> getUser(String key);
 }

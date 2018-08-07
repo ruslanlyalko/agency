@@ -21,8 +21,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getContentView());
-        mUnbinder = ButterKnife.bind(this);
+        int viewId = getContentView();
+        if (viewId != -1) {
+            setContentView(getContentView());
+            mUnbinder = ButterKnife.bind(this);
+        }
         initPresenter(getIntent());
         if (mPresenter == null) {
             throw new RuntimeException("Please init presenter!");
@@ -34,11 +37,14 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     public void onDestroy() {
         getPresenter().detachView();
-        mUnbinder.unbind();
+        if (mUnbinder != null)
+            mUnbinder.unbind();
         super.onDestroy();
     }
 
-    protected abstract int getContentView();
+    protected int getContentView() {return -1;}
+
+    ;
 
     protected abstract void initPresenter(final Intent intent);
 

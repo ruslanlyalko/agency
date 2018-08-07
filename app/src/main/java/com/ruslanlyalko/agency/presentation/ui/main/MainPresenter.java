@@ -11,7 +11,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     MainPresenter() {
     }
 
-    public void showSomeMessage() {
+    public void fetchUser() {
         getView().showUser(getDataManager().getUser("AlCgG4ykr4UN7ZNUgRGUZ5oHaBr1"));
     }
 }

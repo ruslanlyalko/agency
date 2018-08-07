@@ -17,6 +17,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @BindView(R.id.text_view) TextView mTextView;
 
+    public static Intent getLaunchIntent(final BaseActivity activity) {
+        return new Intent(activity, MainActivity.class);
+    }
+
     @Override
     protected int getContentView() {
         return R.layout.activity_main;
@@ -29,12 +33,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     @Override
     protected void onViewReady(final Bundle savedInstanceState) {
-        getPresenter().showSomeMessage();
-    }
-
-    @Override
-    public void showMessage(final String text) {
-        mTextView.setText(text);
+        getPresenter().fetchUser();
     }
 
     @Override
