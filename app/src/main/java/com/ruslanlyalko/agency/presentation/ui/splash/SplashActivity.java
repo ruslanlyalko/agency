@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.ruslanlyalko.agency.presentation.base.BaseActivity;
+import com.ruslanlyalko.agency.presentation.ui.dashboard.DashboardActivity;
 import com.ruslanlyalko.agency.presentation.ui.login.LoginActivity;
-import com.ruslanlyalko.agency.presentation.ui.main.MainActivity;
 
 public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashView {
 
@@ -20,8 +20,8 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     }
 
     @Override
-    public void startMainScreen() {
-        startActivity(MainActivity.getLaunchIntent(this));
+    public void startDashboardScreen() {
+        startActivity(DashboardActivity.getLaunchIntent(this));
         finish();
     }
 

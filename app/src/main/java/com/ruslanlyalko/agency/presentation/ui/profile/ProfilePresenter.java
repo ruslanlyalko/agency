@@ -1,4 +1,4 @@
-package com.ruslanlyalko.agency.presentation.ui.main;
+package com.ruslanlyalko.agency.presentation.ui.profile;
 
 import com.ruslanlyalko.agency.presentation.base.BasePresenter;
 
@@ -6,9 +6,9 @@ import com.ruslanlyalko.agency.presentation.base.BasePresenter;
  * Created by Ruslan Lyalko
  * on 06.08.2018.
  */
-public class MainPresenter extends BasePresenter<MainView> {
+public class ProfilePresenter extends BasePresenter<ProfileView> {
 
-    MainPresenter() {
+    ProfilePresenter() {
     }
 
     public void fetchUser() {

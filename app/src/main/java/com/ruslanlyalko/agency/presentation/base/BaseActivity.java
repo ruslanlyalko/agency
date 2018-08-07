@@ -1,9 +1,13 @@
 package com.ruslanlyalko.agency.presentation.base;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import butterknife.ButterKnife;
@@ -42,9 +46,33 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onDestroy();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onHomeClicked();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        hideKeyboard();
+    }
+
     protected int getContentView() {return -1;}
 
-    ;
+    protected void onHomeClicked() {
+        onBackPressed();
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = getCurrentFocus();
+        if (imm != null && view != null)
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     protected abstract void initPresenter(final Intent intent);
 

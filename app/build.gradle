@@ -51,6 +51,8 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    // Calligraphy
+    implementation "uk.co.chrisjenx:calligraphy:2.3.0"
 
 }
 apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="renner_black" translatable="false">fonts/renner-black.otf</string>
+    <string name="renner_blackitalic" translatable="false">fonts/renner-blackitalic.otf</string>
+    <string name="renner_bold" translatable="false">fonts/renner-bold.otf</string>
+    <string name="renner_bolditalic" translatable="false">fonts/renner-bolditalic.otf</string>
+    <string name="renner_book" translatable="false">fonts/renner-book.otf</string>
+    <string name="renner_bookitalic" translatable="false">fonts/renner-bookitalic.otf</string>
+    <string name="renner_light" translatable="false">fonts/renner-light.otf</string>
+    <string name="renner_lightitalic" translatable="false">fonts/renner-lightitalic.otf</string>
+    <string name="renner_medium" translatable="false">fonts/renner-medium.otf</string>
+    <string name="renner_mediumitalic" translatable="false">fonts/renner-mediumitalic.otf</string>
+
+    <style name="TextAppearance" />
+
+    <style name="TextAppearance.Caption" parent="TextAppearance.AppCompat.Caption">
+        <item name="fontPath">@string/renner_medium</item>
+        <item name="android:textSize">@dimen/ts_caption</item>
+    </style>
+
+    <style name="TextAppearance.Body1" parent="TextAppearance.AppCompat.Body1">
+        <item name="fontPath">@string/renner_medium</item>
+        <item name="android:textSize">@dimen/ts_body</item>
+    </style>
+
+    <style name="TextAppearance.Body2" parent="TextAppearance.AppCompat.Body2">
+        <item name="fontPath">@string/renner_medium</item>
+        <item name="android:textSize">@dimen/ts_body_2</item>
+    </style>
+
+    <style name="TextAppearance.Subhead" parent="TextAppearance.AppCompat.Subhead">
+        <item name="fontPath">@string/renner_black</item>
+        <item name="android:textSize">@dimen/ts_subhead</item>
+    </style>
+
+    <style name="TextAppearance.Button" parent="TextAppearance.AppCompat.Button">
+        <item name="fontPath">@string/renner_medium</item>
+        <item name="android:textSize">@dimen/ts_button</item>
+    </style>
+
+    <style name="TextAppearance.Title" parent="TextAppearance.AppCompat.Title">
+        <item name="fontPath">@string/renner_black</item>
+        <item name="android:textSize">@dimen/ts_title</item>
+    </style>
+
+    <style name="TextAppearance.Headline" parent="TextAppearance.AppCompat.Headline">
+        <item name="fontPath">@string/renner_black</item>
+        <item name="android:textSize">@dimen/ts_headline</item>
+    </style>
+
+</resources>

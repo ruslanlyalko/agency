@@ -1,10 +1,6 @@
 package com.ruslanlyalko.agency.presentation.ui.splash;
 
-import android.arch.lifecycle.MutableLiveData;
-
-import com.ruslanlyalko.agency.data.models.User;
 import com.ruslanlyalko.agency.presentation.base.BaseView;
-import com.ruslanlyalko.agency.presentation.ui.main.MainPresenter;
 
 /**
  * Created by Ruslan Lyalko
@@ -12,7 +8,7 @@ import com.ruslanlyalko.agency.presentation.ui.main.MainPresenter;
  */
 public interface SplashView extends BaseView<SplashPresenter> {
 
-    void startMainScreen();
+    void startDashboardScreen();
 
     void startLoginScreen();
 }

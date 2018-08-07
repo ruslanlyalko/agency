@@ -1,4 +1,4 @@
-package com.ruslanlyalko.agency.presentation.ui.main;
+package com.ruslanlyalko.agency.presentation.ui.dashboard;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
@@ -13,22 +13,22 @@ import com.ruslanlyalko.agency.presentation.base.BaseActivity;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity<MainPresenter> implements MainView {
+public class DashboardActivity extends BaseActivity<DashboardPresenter> implements DashboardView {
 
     @BindView(R.id.text_view) TextView mTextView;
 
     public static Intent getLaunchIntent(final BaseActivity activity) {
-        return new Intent(activity, MainActivity.class);
+        return new Intent(activity, DashboardActivity.class);
     }
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_main;
+        return R.layout.activity_dashboard;
     }
 
     @Override
     protected void initPresenter(final Intent intent) {
-        setPresenter(new MainPresenter());
+        setPresenter(new DashboardPresenter());
     }
 
     @Override

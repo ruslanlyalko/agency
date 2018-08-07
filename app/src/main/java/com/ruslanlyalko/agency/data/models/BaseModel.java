@@ -7,4 +7,8 @@ package com.ruslanlyalko.agency.data.models;
 public class BaseModel {
 
     String key;
+
+    public String getKey() {
+        return key;
+    }
 }

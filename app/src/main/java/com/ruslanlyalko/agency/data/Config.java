@@ -8,4 +8,6 @@ interface Config {
 
     String DB_USERS = "USERS";
     String DB_USERS_DATA = "DATA";
+    String DB_ORDERS = "ORDERS";
+    String DB_EQUIPMENTS = "EQUIPMENTS";
 }
