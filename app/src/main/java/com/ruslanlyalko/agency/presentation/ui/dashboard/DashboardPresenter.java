@@ -1,6 +1,10 @@
 package com.ruslanlyalko.agency.presentation.ui.dashboard;
 
+import com.ruslanlyalko.agency.data.models.Order;
 import com.ruslanlyalko.agency.presentation.base.BasePresenter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ruslan Lyalko
@@ -11,7 +15,11 @@ public class DashboardPresenter extends BasePresenter<DashboardView> {
     DashboardPresenter() {
     }
 
-    public void fetchUser() {
-        getView().showUser(getDataManager().getUser("AlCgG4ykr4UN7ZNUgRGUZ5oHaBr1"));
+    public void fetchPastOrders() {
+        List<Order> list = new ArrayList<>();
+        list.add(new Order());
+        list.add(new Order());
+        list.add(new Order());
+        getView().setPastOrders(list);
     }
 }

@@ -1,5 +1,10 @@
 package com.ruslanlyalko.agency.presentation.ui.splash;
 
+import android.support.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.ruslanlyalko.agency.presentation.base.BasePresenter;
 
 /**
@@ -15,7 +20,16 @@ public class SplashPresenter extends BasePresenter<SplashView> {
         if (getCurrentUser() != null) {
             getView().startDashboardScreen();
         } else {
-            getView().startLoginScreen();
+            getAuth().signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull final Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        getView().startDashboardScreen();
+                    } else {
+                        getView().showMessage("Can't login");
+                    }
+                }
+            });
         }
     }
 }

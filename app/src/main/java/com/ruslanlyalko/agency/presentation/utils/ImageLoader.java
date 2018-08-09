@@ -14,7 +14,13 @@ public class ImageLoader {
     public static void loadPhoto(String url, ImageView imageView) {
         Glide.with(imageView)
                 .load(url)
-                .apply(RequestOptions.centerCropTransform())
+                .into(imageView);
+    }
+
+    public static void loadCirclePhoto(String url, ImageView imageView) {
+        Glide.with(imageView)
+                .load(url)
+                .apply(RequestOptions.circleCropTransform())
                 .into(imageView);
     }
 }

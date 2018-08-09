@@ -1,20 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
+    android:focusableInTouchMode="true"
     tools:context="com.ruslanlyalko.agency.presentation.ui.dashboard.DashboardActivity">
 
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="430dp"
+            android:background="@drawable/bg_main">
+
+            <ImageView
+                android:id="@+id/image_logo"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="48dp"
+                android:background="@drawable/bg_user"
+                android:padding="3dp"
+                android:src="@drawable/bg_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/label_orders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="120dp"
+                android:layout_toStartOf="@+id/text_add_more"
+                android:text="@string/text_orders"
+                android:textAppearance="@style/TextAppearance.Subhead"
+                android:textColor="@color/colorTextWhite"
+                android:textSize="30sp"
+                />
+
+            <TextView
+                android:id="@+id/text_add_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/label_orders"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/bg_add"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/text_add_more"
+                android:textAppearance="@style/TextAppearance.Body2"
+                android:textColor="@color/colorTextWhite"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/card_height"
+                android:layout_below="@id/label_orders"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.6"
+                    app:cardCornerRadius="10dp" />
+
+                <TextView
+                    android:id="@+id/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:padding="4dp"
+                    android:text="SOME DESCRIPTION HERE"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/TextAppearance.Body2"
+                    android:textColor="@color/colorTextWhite"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_title"
+                    android:layout_marginStart="24dp"
+                    android:padding="4dp"
+                    android:text="Ivan, 9"
+                    android:textAppearance="@style/TextAppearance.Body2"
+                    android:textColor="@color/colorTextWhite"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:id="@+id/label_your_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:text="@string/text_your_balance"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.Body2"
+                android:textColor="@color/colorTextGray"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/text_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/label_your_balance"
+                android:layout_marginStart="32dp"
+                android:text="$175,900.00"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.Subhead"
+                android:textColor="@color/colorTextRed"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/label_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_balance"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/text_income"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.Body2"
+                android:textColor="@color/colorTextGray"
+                android:textSize="13sp"
+                />
+
+            <TextView
+                android:id="@+id/text_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/label_income"
+                android:layout_marginStart="32dp"
+                android:text="+$6,520.00"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.Subhead"
+                android:textColor="@color/colorTextBlackDark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/label_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/text_balance"
+                android:layout_marginEnd="120dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/text_expense"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.Body2"
+                android:textColor="@color/colorTextGray"
+                android:textSize="13sp"
+                />
+
+            <TextView
+                android:id="@+id/text_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/label_expense"
+                android:layout_below="@id/label_expense"
+                android:text="-$2,270.00"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.Subhead"
+                android:textColor="@color/colorTextBlackDark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_past_orders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_income"
+                android:layout_marginTop="32dp"
+                android:focusableInTouchMode="false"
+                android:nestedScrollingEnabled="false" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_below="@id/recycler_past_orders" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

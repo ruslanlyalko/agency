@@ -15,7 +15,7 @@
         <activity
             android:name=".presentation.ui.splash.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Splash">
+            android:theme="@style/AppTheme.Dashboard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,6 +25,7 @@
         <activity
             android:name=".presentation.ui.dashboard.DashboardActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Dashboard"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.ui.login.LoginActivity"

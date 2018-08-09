@@ -34,5 +34,6 @@
     <dimen name="ts_display">34sp</dimen>
 
     <dimen name="divider">1dp</dimen>
+    <dimen name="card_height">200dp</dimen>
 
 </resources>

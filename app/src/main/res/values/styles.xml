@@ -9,10 +9,15 @@
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:colorControlHighlight">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.Splash" parent="AppTheme">
         <item name="android:windowBackground">@drawable/launcher_screen</item>
+    </style>
+
+    <style name="AppTheme.Dashboard" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/dashboard_screen</item>
     </style>
 
 </resources>
