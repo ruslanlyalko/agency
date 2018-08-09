@@ -1,14 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-        android:color="@color/colorAccent">
+        android:color="?attr/colorControlHighlight">
     <item>
-        <shape android:shape="rectangle">
-            <corners android:radius="10dp" />
-            <padding
-                android:bottom="4dp"
-                android:left="10dp"
-                android:right="10dp"
-                android:top="4dp" />
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <solid android:color="#00000000" />
+            <corners android:radius="27dp" />
         </shape>
     </item>
 </ripple>
