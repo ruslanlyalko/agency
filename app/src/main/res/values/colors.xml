@@ -8,7 +8,7 @@
     //Text
     <color name="colorTextWhite">#ffffff</color>
     <color name="colorTextRed">#ff6089</color>
-    <color name="colorTextGrayLight">#fafafa</color>
+    <color name="colorTextGrayLight">#f0f0f0</color>
     <color name="colorTextGray">#b1b1b1</color>
     <color name="colorTextGrayDark">#767676</color>
     <color name="colorTextBlack">#545454</color>
