@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -19,9 +20,12 @@ import com.ruslanlyalko.agency.data.models.User;
 import com.ruslanlyalko.agency.presentation.base.BaseActivity;
 import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.OnItemClickListener;
 import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.PastOrdersAdapter;
+import com.ruslanlyalko.agency.presentation.ui.dashboard.pager.UpcomingPagerAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -33,9 +37,12 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     @BindView(R.id.text_expense) TextView mTextExpense;
     @BindView(R.id.recycler_past_orders) RecyclerView mRecyclerPastOrders;
     @BindView(R.id.bottom_sheet) LinearLayout mBottomSheet;
-
-    BottomSheetBehavior mSheetBehavior;
+    @BindView(R.id.view_pager_upcoming) ViewPager mViewPagerUpcoming;
+    @BindDimen(R.dimen.margin_default) int mMargin16;
+    @BindDimen(R.dimen.margin_double) int mMargin32;
+    private BottomSheetBehavior mSheetBehavior;
     private PastOrdersAdapter mAdapter = new PastOrdersAdapter(this);
+    private UpcomingPagerAdapter mUpcomingAdapter;
 
     public static Intent getLaunchIntent(final BaseActivity activity) {
         return new Intent(activity, DashboardActivity.class);
@@ -58,25 +65,6 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     }
 
     @Override
-    protected int getContentView() {
-        return R.layout.activity_dashboard;
-    }
-
-    @Override
-    protected void initPresenter(final Intent intent) {
-        setPresenter(new DashboardPresenter());
-    }
-
-    @Override
-    protected void onViewReady(final Bundle savedInstanceState) {
-        mSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
-        mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        mRecyclerPastOrders.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerPastOrders.setAdapter(mAdapter);
-        getPresenter().fetchPastOrders();
-    }
-
-    @Override
     public void onItemClicked(final View view, final int position) {
         Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show();
     }
@@ -94,9 +82,40 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
                 if (mSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
                     mSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 } else {
-                    mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 }
                 break;
         }
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_dashboard;
+    }
+
+    @Override
+    protected void initPresenter(final Intent intent) {
+        setPresenter(new DashboardPresenter());
+    }
+
+    @Override
+    protected void onViewReady(final Bundle savedInstanceState) {
+        mUpcomingAdapter = new UpcomingPagerAdapter(getSupportFragmentManager());
+//        mViewPagerUpcoming.setPageTransformer(true, new ZoomOutTransformation());
+        mViewPagerUpcoming.setAdapter(mUpcomingAdapter);
+        mViewPagerUpcoming.setClipToPadding(false);
+        mViewPagerUpcoming.setPadding(mMargin32, 0, mMargin32, 0);
+        mViewPagerUpcoming.setPageMargin(mMargin16);
+        List<Order> list = new ArrayList<>();
+        list.add(new Order());
+        list.add(new Order());
+        list.add(new Order());
+        list.add(new Order());
+        mUpcomingAdapter.setData(list);
+        mSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        mRecyclerPastOrders.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerPastOrders.setAdapter(mAdapter);
+        getPresenter().fetchPastOrders();
     }
 }
