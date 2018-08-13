@@ -17,4 +17,7 @@ public interface DashboardView extends BaseView<DashboardPresenter> {
     void showUser(MutableLiveData<User> user);
 
     void setPastOrders(List<Order> list);
+
+    void setUpcomingOrders(List<Order> list);
+
 }

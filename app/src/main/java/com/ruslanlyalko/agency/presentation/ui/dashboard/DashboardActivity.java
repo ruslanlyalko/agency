@@ -10,7 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +22,8 @@ import com.ruslanlyalko.agency.presentation.base.BaseActivity;
 import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.OnItemClickListener;
 import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.PastOrdersAdapter;
 import com.ruslanlyalko.agency.presentation.ui.dashboard.pager.UpcomingPagerAdapter;
+import com.ruslanlyalko.agency.presentation.utils.ImageLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindDimen;
@@ -31,12 +32,13 @@ import butterknife.OnClick;
 
 public class DashboardActivity extends BaseActivity<DashboardPresenter> implements DashboardView, OnItemClickListener {
 
+    @BindView(R.id.image_client_avatar) ImageView mImageClientAvatar;
     @BindView(R.id.text_add_more) TextView mTextAddMore;
     @BindView(R.id.text_balance) TextView mTextBalance;
     @BindView(R.id.text_income) TextView mTextIncome;
     @BindView(R.id.text_expense) TextView mTextExpense;
     @BindView(R.id.recycler_past_orders) RecyclerView mRecyclerPastOrders;
-    @BindView(R.id.bottom_sheet) LinearLayout mBottomSheet;
+    @BindView(R.id.bottom_sheet) RelativeLayout mBottomSheet;
     @BindView(R.id.view_pager_upcoming) ViewPager mViewPagerUpcoming;
     @BindDimen(R.dimen.margin_default) int mMargin16;
     @BindDimen(R.dimen.margin_double) int mMargin32;
@@ -62,6 +64,11 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     @Override
     public void setPastOrders(final List<Order> list) {
         mAdapter.setData(list);
+    }
+
+    @Override
+    public void setUpcomingOrders(final List<Order> list) {
+        mUpcomingAdapter.setData(list);
     }
 
     @Override
@@ -106,16 +113,11 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
         mViewPagerUpcoming.setClipToPadding(false);
         mViewPagerUpcoming.setPadding(mMargin32, 0, mMargin32, 0);
         mViewPagerUpcoming.setPageMargin(mMargin16);
-        List<Order> list = new ArrayList<>();
-        list.add(new Order());
-        list.add(new Order());
-        list.add(new Order());
-        list.add(new Order());
-        mUpcomingAdapter.setData(list);
         mSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
         mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         mRecyclerPastOrders.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerPastOrders.setAdapter(mAdapter);
-        getPresenter().fetchPastOrders();
+//        ImageLoader.loadCirclePhoto("http://somephoto.jpg", mImageClientAvatar);
+        getPresenter().fetchOrders();
     }
 }

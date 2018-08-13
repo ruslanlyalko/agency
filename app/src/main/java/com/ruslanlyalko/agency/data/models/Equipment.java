@@ -14,6 +14,8 @@ public class Equipment extends BaseModel {
         return title;
     }
 
+    public Equipment() {}
+
     @Override
     public int describeContents() { return 0; }
 
@@ -22,8 +24,6 @@ public class Equipment extends BaseModel {
         super.writeToParcel(dest, flags);
         dest.writeString(this.title);
     }
-
-    public Equipment() {}
 
     protected Equipment(Parcel in) {
         super(in);

@@ -19,6 +19,19 @@
             android:background="@drawable/bg_main">
 
             <ImageView
+                android:id="@+id/image_home"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="52dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_menu_24dp"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
                 android:id="@+id/image_logo"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
@@ -203,6 +216,10 @@
                 android:focusableInTouchMode="false"
                 android:nestedScrollingEnabled="false" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_below="@id/recycler_past_orders" />
         </RelativeLayout>
     </LinearLayout>
 

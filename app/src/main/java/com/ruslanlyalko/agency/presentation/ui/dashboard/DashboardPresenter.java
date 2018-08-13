@@ -15,11 +15,12 @@ public class DashboardPresenter extends BasePresenter<DashboardView> {
     DashboardPresenter() {
     }
 
-    public void fetchPastOrders() {
+    public void fetchOrders() {
         List<Order> list = new ArrayList<>();
         list.add(new Order());
         list.add(new Order());
         list.add(new Order());
         getView().setPastOrders(list);
+        getView().setUpcomingOrders(list);
     }
 }

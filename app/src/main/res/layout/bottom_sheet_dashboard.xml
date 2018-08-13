@@ -1,45 +1,422 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:id="@+id/bottom_sheet"
-              android:layout_width="match_parent"
-              android:layout_height="500dp"
-              android:orientation="vertical"
-              app:behavior_hideable="true"
-              app:behavior_peekHeight="80dp"
-              android:focusable="true"
-              android:clickable="true"
-              android:focusableInTouchMode="true"
-              app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/bottom_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="540dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
+                app:behavior_hideable="true"
+                app:behavior_peekHeight="35dp"
+                app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
+    <!--Card 1-->
     <android.support.v7.widget.CardView
+        android:id="@+id/card_1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="35dp"
+        app:cardBackgroundColor="@color/colorBackgroundGray"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edit_phone"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="@string/hint_phone_number"
+                android:inputType="phone"
+                android:textAppearance="@style/TextAppearance.Body2"
+                android:textColor="@android:color/white"
+                android:textColorHint="@color/colorTextGrayLight"
+                android:textSize="16sp"
+                />
+
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/edit_phone"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="12dp"
+                android:backgroundTint="@android:color/transparent"
+                android:gravity="end"
+                android:hint="@string/hint_client_name"
+                android:inputType="textCapWords"
+                android:textAppearance="@style/TextAppearance.Body2"
+                android:textColor="@android:color/white"
+                android:textColorHint="@color/colorTextGrayLight"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edit_phone"
+                android:layout_marginStart="16dp"
+                android:backgroundTint="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:text="Jun 12"
+                android:textAppearance="@style/TextAppearance.Body2"
+                android:textColor="@color/color_selector_add"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/text_time"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/text_date"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="end"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:text="16:00"
+                android:textAppearance="@style/TextAppearance.Body2"
+                android:textColor="@color/color_selector_add"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_hrs_minus"
+                    android:layout_width="40dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/bg_minus"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textAppearance="@style/TextAppearance.Body1"
+                    android:textColor="@color/colorTextWhite" />
+
+                <TextView
+                    android:id="@+id/text_hrs"
+                    android:layout_width="50dp"
+                    android:layout_height="36dp"
+                    android:background="@color/colorAccent"
+                    android:gravity="center"
+                    android:text="1.5h"
+                    android:textAppearance="@style/TextAppearance.Body1"
+                    android:textColor="@color/colorTextWhite" />
+
+                <TextView
+                    android:id="@+id/text_hrs_plus"
+                    android:layout_width="40dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/bg_plus"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="+"
+                    android:textAppearance="@style/TextAppearance.Body1"
+                    android:textColor="@color/colorTextWhite" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/label_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="12dp"
+                android:layout_marginStart="16dp"
+                android:backgroundTint="@android:color/transparent"
+                android:text="@string/text_income"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.Body2"
+                android:textColor="@color/colorTextWhite"
+                android:textColorHint="@color/colorTextGrayLight"
+                android:textSize="16sp"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="2dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edit_income"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:gravity="center"
+                    android:hint="@string/text_zero"
+                    android:inputType="number"
+                    android:textAppearance="@style/TextAppearance.Body2"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/colorTextGrayLight"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edit_expense"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:gravity="center"
+                    android:hint="@string/text_zero"
+                    android:inputType="number"
+                    android:textAppearance="@style/TextAppearance.Body2"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/colorTextGrayLight"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/label_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="12dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@android:color/transparent"
+                android:text="@string/text_expense"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.Body2"
+                android:textColor="@color/colorTextWhite"
+                android:textColorHint="@color/colorTextGrayLight"
+                android:textSize="16sp"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <!--Card User-->
+    <android.support.v7.widget.CardView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        app:cardBackgroundColor="@color/colorBackgroundGray"
+        app:cardCornerRadius="35dp">
+
+        <ImageView
+            android:id="@+id/image_client_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/bg_image" />
+    </android.support.v7.widget.CardView>
+
+    <!--Card 2-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_2"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_below="@id/card_1"
+        android:layout_marginTop="12dp"
+        app:cardBackgroundColor="@color/colorBackgroundGray"
         app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:background="@color/colorAccent"
-                android:gravity="center"
-                android:text="sdfdsf"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/edit_description"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:background="@color/colorTextGray"
-                android:gravity="center"
-                android:text="sdfdsf"
-                android:textColor="@android:color/white" />
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/transparent"
+                android:gravity="start|top"
+                android:hint="@string/hint_description"
+                android:inputType="textMultiLine|textCapSentences"
+                android:padding="12dp"
+                android:textAppearance="@style/TextAppearance.Body2"
+                android:textColor="@android:color/white"
+                android:textColorHint="@color/colorTextGrayLight"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
-</LinearLayout>
+    <!--Card 3-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_2"
+        android:layout_marginTop="12dp"
+        app:cardBackgroundColor="@color/colorBackgroundGray"
+        app:cardCornerRadius="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <!-- Aqua, Mk -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--Aqua-->
+                <CheckBox
+                    android:id="@+id/check_aqua"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:drawablePadding="4dp"
+                    android:text="@string/text_check_aqua"
+                    android:textAppearance="@style/TextAppearance.Body1"
+                    android:textColor="@android:color/white" />
+
+                <!--Mk-->
+                <CheckBox
+                    android:id="@+id/check_mk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:drawablePadding="4dp"
+                    android:text="@string/text_check_mk"
+                    android:textAppearance="@style/TextAppearance.Body1"
+                    android:textColor="@android:color/white" />
+
+                <!--Pin-->
+                <CheckBox
+                    android:id="@+id/check_pin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:drawablePadding="4dp"
+                    android:text="@string/text_check_pin"
+                    android:textAppearance="@style/TextAppearance.Body1"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <!-- Children -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginEnd="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_equipment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"
+                    android:text="@string/text_choose_equipment"
+                    android:textAppearance="@style/TextAppearance.Body1"
+                    android:textColor="@color/color_selector_add" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:text="@string/text_children_count"
+                    android:textAppearance="@style/TextAppearance.Body1"
+                    android:textColor="@color/colorTextWhite" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/children_count_minus"
+                        android:layout_width="40dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_minus"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textAppearance="@style/TextAppearance.Body1"
+                        android:textColor="@color/colorTextWhite" />
+
+                    <TextView
+                        android:id="@+id/text_children_count"
+                        android:layout_width="50dp"
+                        android:layout_height="36dp"
+                        android:background="@color/colorAccent"
+                        android:gravity="center"
+                        android:text="10"
+                        android:textAppearance="@style/TextAppearance.Body1"
+                        android:textColor="@color/colorTextWhite" />
+
+                    <TextView
+                        android:id="@+id/children_count_plus"
+                        android:layout_width="40dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_plus"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textAppearance="@style/TextAppearance.Body1"
+                        android:textColor="@color/colorTextWhite" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <!--Card 4-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/card_3"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        app:cardBackgroundColor="@color/colorBackgroundGray"
+        app:cardCornerRadius="10dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+            android:scaleType="center"
+            android:src="@drawable/ic_add_a_photo_24dp"
+            tools:ignore="ContentDescription" />
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

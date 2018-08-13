@@ -3,6 +3,15 @@
     <string name="text_orders">Orders</string>
     <string name="text_add_more">ADD MORE +</string>
     <string name="text_your_balance">your balance</string>
-    <string name="text_income">income</string>
-    <string name="text_expense">expense</string>
+    <string name="text_income">Income</string>
+    <string name="text_expense">Expense</string>
+    <string name="hint_description"> Type any description here</string>
+    <string name="text_children_count">Children count</string>
+    <string name="text_check_aqua">Aqua-grim</string>
+    <string name="text_check_mk">Master-class</string>
+    <string name="text_check_pin">Pinata</string>
+    <string name="hint_client_name">Client name</string>
+    <string name="hint_phone_number">Phone number</string>
+    <string name="text_zero">0</string>
+    <string name="text_choose_equipment">[ choose ]</string>
 </resources>

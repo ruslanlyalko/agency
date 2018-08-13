@@ -9,7 +9,7 @@
     tools:context="com.ruslanlyalko.agency.presentation.ui.dashboard.DashboardActivity">
 
     <!-- include app bar -->
-    <include layout="@layout/app_bar" />
+    <!--<include layout="@layout/app_bar" />-->
 
     <!-- include main content -->
     <include layout="@layout/content_dashboard" />
