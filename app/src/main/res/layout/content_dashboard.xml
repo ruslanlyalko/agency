@@ -135,12 +135,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/label_your_balance"
                 android:layout_marginStart="32dp"
-                android:text="$175,900.00"
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.Subhead"
                 android:textColor="@color/colorTextRed"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                tools:text="$175,900.00"
                 />
 
             <TextView
@@ -163,12 +163,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/label_income"
                 android:layout_marginStart="32dp"
-                android:text="+$6,520.00"
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.Subhead"
                 android:textColor="@color/colorTextBlackDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                tools:text="+$6,520.00"
                 />
 
             <TextView
@@ -192,12 +192,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@id/label_expense"
                 android:layout_below="@id/label_expense"
-                android:text="-$2,270.00"
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.Subhead"
                 android:textColor="@color/colorTextBlackDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                tools:text="-$2,270.00"
                 />
 
             <FrameLayout

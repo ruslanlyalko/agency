@@ -1,15 +1,15 @@
 package com.ruslanlyalko.agency.presentation.ui.dashboard;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,8 +22,11 @@ import com.ruslanlyalko.agency.presentation.base.BaseActivity;
 import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.OnItemClickListener;
 import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.PastOrdersAdapter;
 import com.ruslanlyalko.agency.presentation.ui.dashboard.pager.UpcomingPagerAdapter;
-import com.ruslanlyalko.agency.presentation.utils.ImageLoader;
+import com.ruslanlyalko.agency.presentation.utils.DateUtils;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindDimen;
@@ -32,7 +35,6 @@ import butterknife.OnClick;
 
 public class DashboardActivity extends BaseActivity<DashboardPresenter> implements DashboardView, OnItemClickListener {
 
-    @BindView(R.id.image_client_avatar) ImageView mImageClientAvatar;
     @BindView(R.id.text_add_more) TextView mTextAddMore;
     @BindView(R.id.text_balance) TextView mTextBalance;
     @BindView(R.id.text_income) TextView mTextIncome;
@@ -40,10 +42,27 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     @BindView(R.id.recycler_past_orders) RecyclerView mRecyclerPastOrders;
     @BindView(R.id.bottom_sheet) RelativeLayout mBottomSheet;
     @BindView(R.id.view_pager_upcoming) ViewPager mViewPagerUpcoming;
+    // Add order
+    @BindView(R.id.image_client_avatar) ImageView mImageClientAvatar;
+    @BindView(R.id.edit_phone) EditText mEditPhone;
+    @BindView(R.id.edit_name) EditText mEditName;
+    @BindView(R.id.text_date) TextView mTextDate;
+    @BindView(R.id.text_time) TextView mTextTime;
+    @BindView(R.id.edit_income) EditText mEditIncome;
+    @BindView(R.id.edit_expense) EditText mEditExpense;
+    @BindView(R.id.edit_description) EditText mEditDescription;
+    @BindView(R.id.check_aqua) CheckBox mCheckAqua;
+    @BindView(R.id.check_mk) CheckBox mCheckMk;
+    @BindView(R.id.check_pin) CheckBox mCheckPin;
+    @BindView(R.id.text_equipment) TextView mTextEquipment;
+    @BindView(R.id.text_children_count) TextView mTextChildrenCount;
+    // Dimens
     @BindDimen(R.dimen.margin_default) int mMargin16;
     @BindDimen(R.dimen.margin_double) int mMargin32;
+
+    private Order mNewOrder = new Order();
     private BottomSheetBehavior mSheetBehavior;
-    private PastOrdersAdapter mAdapter = new PastOrdersAdapter(this);
+    private PastOrdersAdapter mPastAdapter = new PastOrdersAdapter(this);
     private UpcomingPagerAdapter mUpcomingAdapter;
 
     public static Intent getLaunchIntent(final BaseActivity activity) {
@@ -52,23 +71,22 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
 
     @Override
     public void showUser(final MutableLiveData<User> user) {
-        user.observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(@Nullable final User user) {
-//                if (user != null)
-//                    mTextView.setText(user.getName());
-            }
+        user.observe(this, user1 -> {
+            if (user1 == null) return;
+            mTextBalance.setText(String.valueOf(user1.getBalance()));
+            mTextIncome.setText(String.valueOf(user1.getIncome()));
+            mTextExpense.setText(String.valueOf(user1.getExpense()));
         });
     }
 
     @Override
-    public void setPastOrders(final List<Order> list) {
-        mAdapter.setData(list);
+    public void showFutureOrders(final MutableLiveData<List<Order>> futureOrders) {
+        futureOrders.observe(this, orders -> mUpcomingAdapter.setData(orders));
     }
 
     @Override
-    public void setUpcomingOrders(final List<Order> list) {
-        mUpcomingAdapter.setData(list);
+    public void showPastOrders(final MutableLiveData<List<Order>> pastOrders) {
+        pastOrders.observe(this, orders -> mPastAdapter.setData(orders));
     }
 
     @Override
@@ -77,7 +95,7 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     }
 
     @OnClick({R.id.image_logo, R.id.image_calendar, R.id.image_notifications, R.id.text_add_more})
-    public void onClick(View view) {
+    public void onTopClick(View view) {
         switch (view.getId()) {
             case R.id.image_logo:
                 break;
@@ -116,8 +134,56 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
         mSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
         mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         mRecyclerPastOrders.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerPastOrders.setAdapter(mAdapter);
+        mRecyclerPastOrders.setAdapter(mPastAdapter);
 //        ImageLoader.loadCirclePhoto("http://somephoto.jpg", mImageClientAvatar);
+        getPresenter().fetchCurrentUser();
         getPresenter().fetchOrders();
+    }
+
+    @OnClick({R.id.text_date, R.id.text_time, R.id.text_hrs_minus, R.id.text_hrs, R.id.text_hrs_plus, R.id.card_save, R.id.card_cancel, R.id.text_equipment, R.id.children_count_minus, R.id.children_count_plus})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.text_date:
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(mNewOrder.getDate());
+                DatePickerDialog.newInstance((datePicker, year, month, day)
+                                -> {
+                            mNewOrder.setDate(DateUtils.getDate(mNewOrder.getDate(), year, month, day));
+                            mTextDate.setText(DateUtils.toStringDate(mNewOrder.getDate()));
+                        },
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)
+                ).show(getFragmentManager(), "date");
+                break;
+            case R.id.text_time:
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.setTime(mNewOrder.getDate());
+                TimePickerDialog dialog1 = TimePickerDialog.newInstance((datePicker, hours, minutes, seconds)
+                                -> {
+                            mNewOrder.setDate(DateUtils.getDate(mNewOrder.getDate(), hours, minutes));
+                            mTextTime.setText(DateUtils.toStringTime(mNewOrder.getDate()));
+                        },
+                        calendar1.get(Calendar.HOUR_OF_DAY),
+                        calendar1.get(Calendar.MINUTE), true);
+                dialog1.show(getFragmentManager(), "time");
+                break;
+            case R.id.text_hrs_minus:
+                break;
+            case R.id.text_hrs:
+                break;
+            case R.id.text_hrs_plus:
+                break;
+            case R.id.card_save:
+                break;
+            case R.id.card_cancel:
+                break;
+            case R.id.text_equipment:
+                break;
+            case R.id.children_count_minus:
+                break;
+            case R.id.children_count_plus:
+                break;
+        }
     }
 }

@@ -16,6 +16,23 @@ public class User extends BaseModel {
     private String avatar;
     private String ownerId;
     private Date birthday;
+    private float balance;
+    private float income;
+    private float expense;
+
+    public User() {}
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public float getIncome() {
+        return income;
+    }
+
+    public float getExpense() {
+        return expense;
+    }
 
     public String getName() {
         return name;
@@ -41,8 +58,6 @@ public class User extends BaseModel {
         return ownerId;
     }
 
-    public User() {}
-
     @Override
     public int describeContents() { return 0; }
 
@@ -55,6 +70,9 @@ public class User extends BaseModel {
         dest.writeString(this.avatar);
         dest.writeString(this.ownerId);
         dest.writeLong(this.birthday != null ? this.birthday.getTime() : -1);
+        dest.writeFloat(this.balance);
+        dest.writeFloat(this.income);
+        dest.writeFloat(this.expense);
     }
 
     protected User(Parcel in) {
@@ -66,6 +84,9 @@ public class User extends BaseModel {
         this.ownerId = in.readString();
         long tmpBirthday = in.readLong();
         this.birthday = tmpBirthday == -1 ? null : new Date(tmpBirthday);
+        this.balance = in.readFloat();
+        this.income = in.readFloat();
+        this.expense = in.readFloat();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

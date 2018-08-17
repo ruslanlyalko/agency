@@ -11,6 +11,13 @@ import java.util.Date;
  */
 public class Order extends BaseModel implements Parcelable {
 
+    public static final Creator<Order> CREATOR = new Creator<Order>() {
+        @Override
+        public Order createFromParcel(Parcel source) {return new Order(source);}
+
+        @Override
+        public Order[] newArray(int size) {return new Order[size];}
+    };
     private String userId;
     private String phone;
     private String name;
@@ -27,66 +34,148 @@ public class Order extends BaseModel implements Parcelable {
     private boolean pinata;
     private Equipment equipment;
 
-    public Order() {}
+    public Order() {
+        date = new Date();
+    }
+
+    protected Order(Parcel in) {
+        super(in);
+        this.userId = in.readString();
+        this.phone = in.readString();
+        this.name = in.readString();
+        this.file = in.readString();
+        this.localFile = in.readString();
+        long tmpDate = in.readLong();
+        this.date = tmpDate == -1 ? null : new Date(tmpDate);
+        this.description = in.readString();
+        this.duration = in.readInt();
+        this.children = in.readInt();
+        this.income = in.readInt();
+        this.expense = in.readInt();
+        this.mk = in.readByte() != 0;
+        this.aqua = in.readByte() != 0;
+        this.pinata = in.readByte() != 0;
+        this.equipment = in.readParcelable(Equipment.class.getClassLoader());
+    }
 
     public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(final String userId) {
+        this.userId = userId;
     }
 
     public String getPhone() {
         return phone;
     }
 
+    public void setPhone(final String phone) {
+        this.phone = phone;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
     }
 
     public Date getDate() {
         return date;
     }
 
+    public void setDate(final Date date) {
+        this.date = date;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
     }
 
     public int getDuration() {
         return duration;
     }
 
+    public void setDuration(final int duration) {
+        this.duration = duration;
+    }
+
     public int getChildren() {
         return children;
+    }
+
+    public void setChildren(final int children) {
+        this.children = children;
     }
 
     public int getIncome() {
         return income;
     }
 
+    public void setIncome(final int income) {
+        this.income = income;
+    }
+
     public int getExpense() {
         return expense;
+    }
+
+    public void setExpense(final int expense) {
+        this.expense = expense;
     }
 
     public boolean getMk() {
         return mk;
     }
 
+    public void setMk(final boolean mk) {
+        this.mk = mk;
+    }
+
     public boolean getAqua() {
         return aqua;
+    }
+
+    public void setAqua(final boolean aqua) {
+        this.aqua = aqua;
     }
 
     public boolean getPinata() {
         return pinata;
     }
 
+    public void setPinata(final boolean pinata) {
+        this.pinata = pinata;
+    }
+
     public Equipment getEquipment() {
         return equipment;
+    }
+
+    public void setEquipment(final Equipment equipment) {
+        this.equipment = equipment;
     }
 
     public String getFile() {
         return file;
     }
 
+    public void setFile(final String file) {
+        this.file = file;
+    }
+
     public String getLocalFile() {
         return localFile;
+    }
+
+    public void setLocalFile(final String localFile) {
+        this.localFile = localFile;
     }
 
     @Override
@@ -111,32 +200,4 @@ public class Order extends BaseModel implements Parcelable {
         dest.writeByte(this.pinata ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.equipment, flags);
     }
-
-    protected Order(Parcel in) {
-        super(in);
-        this.userId = in.readString();
-        this.phone = in.readString();
-        this.name = in.readString();
-        this.file = in.readString();
-        this.localFile = in.readString();
-        long tmpDate = in.readLong();
-        this.date = tmpDate == -1 ? null : new Date(tmpDate);
-        this.description = in.readString();
-        this.duration = in.readInt();
-        this.children = in.readInt();
-        this.income = in.readInt();
-        this.expense = in.readInt();
-        this.mk = in.readByte() != 0;
-        this.aqua = in.readByte() != 0;
-        this.pinata = in.readByte() != 0;
-        this.equipment = in.readParcelable(Equipment.class.getClassLoader());
-    }
-
-    public static final Creator<Order> CREATOR = new Creator<Order>() {
-        @Override
-        public Order createFromParcel(Parcel source) {return new Order(source);}
-
-        @Override
-        public Order[] newArray(int size) {return new Order[size];}
-    };
 }
