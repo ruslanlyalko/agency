@@ -3,6 +3,7 @@ package com.ruslanlyalko.agency.data.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -18,6 +19,8 @@ public class Order extends BaseModel implements Parcelable {
         @Override
         public Order[] newArray(int size) {return new Order[size];}
     };
+    private static final int DURATION_MAX = 25;
+    private static final int CHILDREN_MAX = 50;
     private String userId;
     private String phone;
     private String name;
@@ -35,7 +38,13 @@ public class Order extends BaseModel implements Parcelable {
     private Equipment equipment;
 
     public Order() {
-        date = new Date();
+        duration = 3;
+        children = 7;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 16);
+        calendar.set(Calendar.MINUTE, 0);
+        date = calendar.getTime();
     }
 
     protected Order(Parcel in) {
@@ -199,5 +208,25 @@ public class Order extends BaseModel implements Parcelable {
         dest.writeByte(this.aqua ? (byte) 1 : (byte) 0);
         dest.writeByte(this.pinata ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.equipment, flags);
+    }
+
+    public void incrementDuration() {
+        if (duration < DURATION_MAX)
+            duration += 1;
+    }
+
+    public void decrementDuration() {
+        if (duration > 0)
+            duration -= 1;
+    }
+
+    public void incrementChildren() {
+        if (children < CHILDREN_MAX)
+            children += 1;
+    }
+
+    public void decrementChildren() {
+        if (children > 0)
+            children -= 1;
     }
 }

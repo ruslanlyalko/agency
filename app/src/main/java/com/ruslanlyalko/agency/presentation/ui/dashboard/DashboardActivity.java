@@ -28,6 +28,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -48,6 +49,7 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     @BindView(R.id.edit_name) EditText mEditName;
     @BindView(R.id.text_date) TextView mTextDate;
     @BindView(R.id.text_time) TextView mTextTime;
+    @BindView(R.id.text_hrs) TextView mTextDuration;
     @BindView(R.id.edit_income) EditText mEditIncome;
     @BindView(R.id.edit_expense) EditText mEditExpense;
     @BindView(R.id.edit_description) EditText mEditDescription;
@@ -140,7 +142,7 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
         getPresenter().fetchOrders();
     }
 
-    @OnClick({R.id.text_date, R.id.text_time, R.id.text_hrs_minus, R.id.text_hrs, R.id.text_hrs_plus, R.id.card_save, R.id.card_cancel, R.id.text_equipment, R.id.children_count_minus, R.id.children_count_plus})
+    @OnClick({R.id.text_date, R.id.text_time, R.id.text_hrs_minus, R.id.text_hrs_plus, R.id.card_save, R.id.card_cancel, R.id.text_equipment, R.id.children_count_minus, R.id.children_count_plus})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.text_date:
@@ -169,20 +171,28 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
                 dialog1.show(getFragmentManager(), "time");
                 break;
             case R.id.text_hrs_minus:
-                break;
-            case R.id.text_hrs:
+                mNewOrder.decrementDuration();
+                mTextDuration.setText(String.format(Locale.US, "%.1f h", (mNewOrder.getDuration() * 0.5f)));
                 break;
             case R.id.text_hrs_plus:
+                mNewOrder.incrementDuration();
+                mTextDuration.setText(String.format(Locale.US, "%.1f h", (mNewOrder.getDuration() * 0.5f)));
                 break;
             case R.id.card_save:
                 break;
             case R.id.card_cancel:
+                mNewOrder = new Order();
+                mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 break;
             case R.id.text_equipment:
                 break;
             case R.id.children_count_minus:
+                mNewOrder.decrementChildren();
+                mTextChildrenCount.setText(String.valueOf(mNewOrder.getChildren()));
                 break;
             case R.id.children_count_plus:
+                mNewOrder.incrementChildren();
+                mTextChildrenCount.setText(String.valueOf(mNewOrder.getChildren()));
                 break;
         }
     }
