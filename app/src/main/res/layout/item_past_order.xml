@@ -7,7 +7,6 @@
     android:layout_height="80dp"
     android:background="?android:attr/selectableItemBackground">
 
-
     <ImageView
         android:id="@+id/image_logo"
         android:layout_width="40dp"
@@ -24,26 +23,29 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@id/image_logo"
-        android:text="Ivan, 9"
         android:textAppearance="@style/TextAppearance.Subhead"
         android:textColor="@color/colorTextBlack"
         android:textSize="18sp"
         android:textStyle="bold"
+        tools:text="Ivan, 9"
         />
 
     <TextView
         android:id="@+id/text_subtitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_title"
+        android:layout_marginEnd="4dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
         android:layout_toEndOf="@id/image_logo"
-        android:text="Some text here"
+        android:layout_toStartOf="@id/text_date"
+        android:ellipsize="end"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.Body2"
         android:textColor="@color/colorTextGray"
         android:textSize="13sp"
+        tools:text="Some text here"
         />
 
     <TextView
@@ -53,10 +55,10 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="10dp"
-        android:text="+$800.00"
         android:textAppearance="@style/TextAppearance.Subhead"
         android:textColor="@color/colorTextBlack"
         android:textSize="18sp"
+        tools:text="+$800.00"
         />
 
     <TextView
@@ -67,10 +69,10 @@
         android:layout_below="@id/text_income"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="-6dp"
-        android:text="-$120.00"
         android:textAppearance="@style/TextAppearance.Subhead"
         android:textColor="@color/colorTextBlack"
         android:textSize="12sp"
+        tools:text="-$120.00"
         />
 
     <TextView
@@ -81,11 +83,11 @@
         android:layout_below="@id/text_title"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="12dp"
-        android:text="Jul 12, 2018"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.Body2"
         android:textColor="@color/colorTextGray"
         android:textSize="13sp"
+        tools:text="Jul 12, 2018"
         />
 
     <View

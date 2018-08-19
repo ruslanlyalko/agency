@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.ruslanlyalko.agency.R;
 import com.ruslanlyalko.agency.data.models.Order;
+import com.ruslanlyalko.agency.presentation.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +31,10 @@ public class PastOrdersAdapter extends RecyclerView.Adapter<PastOrdersAdapter.Vi
 
     public PastOrdersAdapter(final OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
+    }
+
+    public List<Order> getData() {
+        return mData;
     }
 
     public void setData(final List<Order> data) {
@@ -61,6 +67,7 @@ public class PastOrdersAdapter extends RecyclerView.Adapter<PastOrdersAdapter.Vi
         @BindView(R.id.text_title) TextView mTextTitle;
         @BindView(R.id.text_subtitle) TextView mTextSubtitle;
         @BindView(R.id.text_income) TextView mTextIncome;
+        @BindView(R.id.text_expense) TextView mTextExpense;
         @BindView(R.id.text_date) TextView mTextDate;
 
         ViewHolder(View view) {
@@ -69,6 +76,11 @@ public class PastOrdersAdapter extends RecyclerView.Adapter<PastOrdersAdapter.Vi
         }
 
         public void bind(final Order order) {
+            mTextTitle.setText(order.getClientNamePhone());
+            mTextSubtitle.setText(order.getDescription());
+            mTextIncome.setText(String.format(Locale.US, "+$%d", order.getIncome()));
+            mTextExpense.setText(String.format(Locale.US, "-$%d", order.getExpense()));
+            mTextDate.setText(DateUtils.toStringDate(order.getDate()));
         }
 
         @OnClick(R.id.layout_root)

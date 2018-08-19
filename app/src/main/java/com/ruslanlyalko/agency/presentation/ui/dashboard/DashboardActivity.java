@@ -3,6 +3,7 @@ package com.ruslanlyalko.agency.presentation.ui.dashboard;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
@@ -13,15 +14,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ruslanlyalko.agency.R;
 import com.ruslanlyalko.agency.data.models.Order;
 import com.ruslanlyalko.agency.data.models.User;
 import com.ruslanlyalko.agency.presentation.base.BaseActivity;
-import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.future.UpcomingPagerAdapter;
-import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.past.OnItemClickListener;
 import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.past.PastOrdersAdapter;
+import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.upcoming.UpcomingPagerAdapter;
 import com.ruslanlyalko.agency.presentation.utils.DateUtils;
 import com.ruslanlyalko.agency.presentation.utils.RxView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -29,13 +28,12 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class DashboardActivity extends BaseActivity<DashboardPresenter> implements DashboardView, OnItemClickListener {
+public class DashboardActivity extends BaseActivity<DashboardPresenter> implements DashboardView {
 
     @BindView(R.id.text_add_more) TextView mTextAddMore;
     @BindView(R.id.text_balance) TextView mTextBalance;
@@ -46,8 +44,8 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     @BindView(R.id.view_pager_upcoming) ViewPager mViewPagerUpcoming;
     // Add order
     @BindView(R.id.image_client_avatar) ImageView mImageClientAvatar;
-    @BindView(R.id.edit_phone) EditText mEditPhone;
     @BindView(R.id.edit_name) EditText mEditName;
+    @BindView(R.id.edit_phone) EditText mEditPhone;
     @BindView(R.id.text_date) TextView mTextDate;
     @BindView(R.id.text_time) TextView mTextTime;
     @BindView(R.id.text_hrs) TextView mTextDuration;
@@ -63,9 +61,9 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     @BindDimen(R.dimen.margin_default) int mMargin16;
     @BindDimen(R.dimen.margin_double) int mMargin32;
 
-    private Order mNewOrder = new Order();
+    private Order mCurrentOrder = new Order();
     private BottomSheetBehavior mSheetBehavior;
-    private PastOrdersAdapter mPastAdapter = new PastOrdersAdapter(this);
+    private PastOrdersAdapter mPastAdapter;
     private UpcomingPagerAdapter mUpcomingAdapter;
 
     public static Intent getLaunchIntent(final BaseActivity activity) {
@@ -83,6 +81,24 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     }
 
     @Override
+    public void showOrder(final Order order) {
+        mCurrentOrder = order;
+        mEditPhone.setText(order.getPhone());
+        mEditName.setText(order.getName());
+        mTextDate.setText(DateUtils.toStringDate(order.getDate()));
+        mTextTime.setText(DateUtils.toStringTime(order.getDate()));
+        mEditIncome.setText(order.getIncomeFormatted());
+        mEditExpense.setText(order.getExpenseFormatted());
+        mTextDuration.setText(order.getDurationFormatted());
+        mEditDescription.setText(order.getDescription());
+        mCheckAqua.setChecked(order.getAqua());
+        mCheckMk.setChecked(order.getMk());
+        mCheckPinata.setChecked(order.getPinata());
+        mTextChildrenCount.setText(order.getChildrenFormatted());
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    }
+
+    @Override
     public void showFutureOrders(final MutableLiveData<List<Order>> futureOrders) {
         futureOrders.observe(this, orders -> mUpcomingAdapter.setData(orders));
     }
@@ -90,11 +106,6 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     @Override
     public void showPastOrders(final MutableLiveData<List<Order>> pastOrders) {
         pastOrders.observe(this, orders -> mPastAdapter.setData(orders));
-    }
-
-    @Override
-    public void onItemClicked(final View view, final int position) {
-        Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick({R.id.image_logo, R.id.image_calendar, R.id.image_notifications, R.id.text_add_more})
@@ -107,13 +118,116 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
             case R.id.image_notifications:
                 break;
             case R.id.text_add_more:
-                if (mSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-                    mSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                } else {
-                    mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                }
+                showOrder(new Order());
                 break;
         }
+    }
+
+    private void setupBottomSheet() {
+        mSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull final View view, final int state) {
+                mEditName.setEnabled(state != BottomSheetBehavior.STATE_COLLAPSED);
+                mEditPhone.setEnabled(state != BottomSheetBehavior.STATE_COLLAPSED);
+            }
+
+            @Override
+            public void onSlide(@NonNull final View view, final float v) {
+            }
+        });
+    }
+
+    @OnClick({R.id.text_date, R.id.text_time, R.id.text_hrs_minus, R.id.text_hrs_plus, R.id.image_save, R.id.image_cancel, R.id.text_equipment, R.id.children_count_minus, R.id.children_count_plus})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.text_date:
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(mCurrentOrder.getDate());
+                DatePickerDialog.newInstance((datePicker, year, month, day)
+                                -> {
+                            mCurrentOrder.setDate(DateUtils.getDate(mCurrentOrder.getDate(), year, month, day));
+                            mTextDate.setText(DateUtils.toStringDate(mCurrentOrder.getDate()));
+                        },
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)
+                ).show(getFragmentManager(), "date");
+                break;
+            case R.id.text_time:
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.setTime(mCurrentOrder.getDate());
+                TimePickerDialog dialog1 = TimePickerDialog.newInstance((datePicker, hours, minutes, seconds)
+                                -> {
+                            mCurrentOrder.setDate(DateUtils.getDate(mCurrentOrder.getDate(), hours, minutes));
+                            mTextTime.setText(DateUtils.toStringTime(mCurrentOrder.getDate()));
+                        },
+                        calendar1.get(Calendar.HOUR_OF_DAY),
+                        calendar1.get(Calendar.MINUTE), true);
+                dialog1.show(getFragmentManager(), "time");
+                break;
+            case R.id.text_hrs_minus:
+                mCurrentOrder.decrementDuration();
+                mTextDuration.setText(mCurrentOrder.getDurationFormatted());
+                break;
+            case R.id.text_hrs_plus:
+                mCurrentOrder.incrementDuration();
+                mTextDuration.setText(mCurrentOrder.getDurationFormatted());
+                break;
+            case R.id.image_save:
+                hideKeyboard();
+                mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                mCurrentOrder.setDescription(mEditDescription.getText().toString().trim());
+                mCurrentOrder.setPhone(mEditPhone.getText().toString().trim());
+                mCurrentOrder.setName(mEditName.getText().toString().trim());
+                mCurrentOrder.setAqua(mCheckAqua.isChecked());
+                mCurrentOrder.setMk(mCheckMk.isChecked());
+                mCurrentOrder.setPinata(mCheckPinata.isChecked());
+                mCurrentOrder.setIncome(RxView.getInt(mEditIncome.getText().toString()));
+                mCurrentOrder.setExpense(RxView.getInt(mEditExpense.getText().toString()));
+                getPresenter().saveOrder(mCurrentOrder);
+                break;
+            case R.id.image_cancel:
+                hideKeyboard();
+                if (mSheetBehavior.getState() != BottomSheetBehavior.STATE_COLLAPSED)
+                    mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                else
+                    mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                break;
+            case R.id.text_equipment:
+                // todo show equipment list
+                break;
+            case R.id.children_count_minus:
+                mCurrentOrder.decrementChildren();
+                mTextChildrenCount.setText(mCurrentOrder.getChildrenFormatted());
+                break;
+            case R.id.children_count_plus:
+                mCurrentOrder.incrementChildren();
+                mTextChildrenCount.setText(mCurrentOrder.getChildrenFormatted());
+                break;
+        }
+    }
+
+    private void setupAdapters() {
+        mUpcomingAdapter = new UpcomingPagerAdapter(getSupportFragmentManager(),
+                (view, position) -> showOrder(mUpcomingAdapter.getData().get(position)));
+//        mViewPagerUpcoming.setPageTransformer(true, new ZoomOutTransformation());
+        mViewPagerUpcoming.setAdapter(mUpcomingAdapter);
+        mViewPagerUpcoming.setClipToPadding(false);
+        mViewPagerUpcoming.setPadding(mMargin32, 0, mMargin32, 0);
+        mViewPagerUpcoming.setPageMargin(mMargin16);
+        mPastAdapter = new PastOrdersAdapter(
+                (view, position) -> showOrder(mPastAdapter.getData().get(position)));
+        mRecyclerPastOrders.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerPastOrders.setAdapter(mPastAdapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mSheetBehavior.getState() != BottomSheetBehavior.STATE_HIDDEN)
+            mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        else super.onBackPressed();
     }
 
     @Override
@@ -129,91 +243,8 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     @Override
     protected void onViewReady(final Bundle savedInstanceState) {
         setupAdapters();
-        setupNewOrder();
+        setupBottomSheet();
         getPresenter().fetchCurrentUser();
         getPresenter().fetchOrders();
-    }
-
-    private void setupNewOrder() {
-        mSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
-        mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        RxView.queryTextChanged(mEditPhone).observe(this, mNewOrder::setPhone);
-        RxView.queryTextChanged(mEditName).observe(this, mNewOrder::setName);
-        RxView.queryTextChanged(mEditDescription).observe(this, mNewOrder::setDescription);
-        RxView.queryIntChanged(mEditIncome).observe(this, mNewOrder::setIncome);
-        RxView.queryIntChanged(mEditExpense).observe(this, mNewOrder::setExpense);
-        RxView.queryCheckedChanged(mCheckAqua).observe(this, mNewOrder::setAqua);
-        RxView.queryCheckedChanged(mCheckMk).observe(this, mNewOrder::setMk);
-        RxView.queryCheckedChanged(mCheckPinata).observe(this, mNewOrder::setPinata);
-    }
-
-    private void setupAdapters() {
-        mUpcomingAdapter = new UpcomingPagerAdapter(getSupportFragmentManager());
-//        mViewPagerUpcoming.setPageTransformer(true, new ZoomOutTransformation());
-        mViewPagerUpcoming.setAdapter(mUpcomingAdapter);
-        mViewPagerUpcoming.setClipToPadding(false);
-        mViewPagerUpcoming.setPadding(mMargin32, 0, mMargin32, 0);
-        mViewPagerUpcoming.setPageMargin(mMargin16);
-        mRecyclerPastOrders.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerPastOrders.setAdapter(mPastAdapter);
-    }
-
-    @OnClick({R.id.text_date, R.id.text_time, R.id.text_hrs_minus, R.id.text_hrs_plus, R.id.image_save, R.id.image_cancel, R.id.text_equipment, R.id.children_count_minus, R.id.children_count_plus})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.text_date:
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(mNewOrder.getDate());
-                DatePickerDialog.newInstance((datePicker, year, month, day)
-                                -> {
-                            mNewOrder.setDate(DateUtils.getDate(mNewOrder.getDate(), year, month, day));
-                            mTextDate.setText(DateUtils.toStringDate(mNewOrder.getDate()));
-                        },
-                        calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)
-                ).show(getFragmentManager(), "date");
-                break;
-            case R.id.text_time:
-                Calendar calendar1 = Calendar.getInstance();
-                calendar1.setTime(mNewOrder.getDate());
-                TimePickerDialog dialog1 = TimePickerDialog.newInstance((datePicker, hours, minutes, seconds)
-                                -> {
-                            mNewOrder.setDate(DateUtils.getDate(mNewOrder.getDate(), hours, minutes));
-                            mTextTime.setText(DateUtils.toStringTime(mNewOrder.getDate()));
-                        },
-                        calendar1.get(Calendar.HOUR_OF_DAY),
-                        calendar1.get(Calendar.MINUTE), true);
-                dialog1.show(getFragmentManager(), "time");
-                break;
-            case R.id.text_hrs_minus:
-                mNewOrder.decrementDuration();
-                mTextDuration.setText(String.format(Locale.US, "%.1f h", (mNewOrder.getDuration() * 0.5f)));
-                break;
-            case R.id.text_hrs_plus:
-                mNewOrder.incrementDuration();
-                mTextDuration.setText(String.format(Locale.US, "%.1f h", (mNewOrder.getDuration() * 0.5f)));
-                break;
-            case R.id.image_save:
-                mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                getPresenter().saveOrder(mNewOrder);
-                mNewOrder = new Order();
-                break;
-            case R.id.image_cancel:
-                mNewOrder = new Order();
-                mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                break;
-            case R.id.text_equipment:
-                // todo show equipment list
-                break;
-            case R.id.children_count_minus:
-                mNewOrder.decrementChildren();
-                mTextChildrenCount.setText(String.valueOf(mNewOrder.getChildren()));
-                break;
-            case R.id.children_count_plus:
-                mNewOrder.incrementChildren();
-                mTextChildrenCount.setText(String.valueOf(mNewOrder.getChildren()));
-                break;
-        }
     }
 }

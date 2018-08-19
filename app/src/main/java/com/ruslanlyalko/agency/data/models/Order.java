@@ -3,8 +3,11 @@ package com.ruslanlyalko.agency.data.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Ruslan Lyalko
@@ -44,6 +47,7 @@ public class Order extends BaseModel implements Parcelable {
         calendar.setTime(new Date());
         calendar.set(Calendar.HOUR_OF_DAY, 16);
         calendar.set(Calendar.MINUTE, 0);
+        userId = FirebaseAuth.getInstance().getUid();
         date = calendar.getTime();
     }
 
@@ -115,12 +119,20 @@ public class Order extends BaseModel implements Parcelable {
         this.duration = duration;
     }
 
+    public String getDurationFormatted() {
+        return String.format(Locale.US, "%.1f h", (getDuration() * 0.5f));
+    }
+
     public int getChildren() {
         return children;
     }
 
     public void setChildren(final int children) {
         this.children = children;
+    }
+
+    public String getChildrenFormatted() {
+        return String.valueOf(getChildren());
     }
 
     public int getIncome() {
@@ -228,5 +240,19 @@ public class Order extends BaseModel implements Parcelable {
     public void decrementChildren() {
         if (children > 0)
             children -= 1;
+    }
+
+    public String getExpenseFormatted() {
+        return String.valueOf(expense);
+    }
+
+    public String getIncomeFormatted() {
+        return String.valueOf(income);
+    }
+
+    public String getClientNamePhone() {
+        if (name == null) name = "";
+        if (phone == null) phone = "";
+        return String.format("%s %s", name, phone);
     }
 }

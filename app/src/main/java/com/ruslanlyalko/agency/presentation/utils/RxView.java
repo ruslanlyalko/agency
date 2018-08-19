@@ -62,4 +62,14 @@ public class RxView {
         view.setOnCheckedChangeListener((buttonView, isChecked) -> result.postValue(isChecked));
         return result;
     }
+
+    public static int getInt(final String s) {
+        int res = 0;
+        try {
+            res = Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
 }

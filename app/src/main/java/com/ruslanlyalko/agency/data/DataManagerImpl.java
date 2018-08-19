@@ -105,7 +105,7 @@ public class DataManagerImpl implements DataManager {
                         Log.d(TAG, "getPastOrders:onDataChange, userId:" + userId);
                         List<Order> list = new ArrayList<>();
                         for (DataSnapshot snap : dataSnapshot.getChildren()) {
-                            list.add(snap.getValue(Order.class));
+                            list.add(0, snap.getValue(Order.class));
                         }
                         result.postValue(list);
                     }

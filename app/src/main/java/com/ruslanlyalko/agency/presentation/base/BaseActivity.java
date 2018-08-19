@@ -67,7 +67,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         onBackPressed();
     }
 
-    private void hideKeyboard() {
+    protected void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         View view = getCurrentFocus();
         if (imm != null && view != null)
