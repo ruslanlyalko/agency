@@ -1,11 +1,10 @@
-package com.ruslanlyalko.agency.presentation.ui.dashboard.pager;
+package com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.future;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.ruslanlyalko.agency.data.models.Order;
-import com.ruslanlyalko.agency.presentation.ui.dashboard.fragment.UpcomingFragment;
 
 import java.util.ArrayList;
 import java.util.List;

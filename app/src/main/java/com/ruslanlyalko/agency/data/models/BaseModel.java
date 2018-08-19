@@ -15,6 +15,10 @@ public class BaseModel implements Parcelable {
         return key;
     }
 
+    public void setKey(final String key) {
+        this.key = key;
+    }
+
     @Override
     public int describeContents() { return 0; }
 

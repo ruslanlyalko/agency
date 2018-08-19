@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,10 +19,11 @@ import com.ruslanlyalko.agency.R;
 import com.ruslanlyalko.agency.data.models.Order;
 import com.ruslanlyalko.agency.data.models.User;
 import com.ruslanlyalko.agency.presentation.base.BaseActivity;
-import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.OnItemClickListener;
-import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.PastOrdersAdapter;
-import com.ruslanlyalko.agency.presentation.ui.dashboard.pager.UpcomingPagerAdapter;
+import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.future.UpcomingPagerAdapter;
+import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.past.OnItemClickListener;
+import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.past.PastOrdersAdapter;
 import com.ruslanlyalko.agency.presentation.utils.DateUtils;
+import com.ruslanlyalko.agency.presentation.utils.RxView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -41,7 +42,7 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     @BindView(R.id.text_income) TextView mTextIncome;
     @BindView(R.id.text_expense) TextView mTextExpense;
     @BindView(R.id.recycler_past_orders) RecyclerView mRecyclerPastOrders;
-    @BindView(R.id.bottom_sheet) RelativeLayout mBottomSheet;
+    @BindView(R.id.bottom_sheet) CardView mBottomSheet;
     @BindView(R.id.view_pager_upcoming) ViewPager mViewPagerUpcoming;
     // Add order
     @BindView(R.id.image_client_avatar) ImageView mImageClientAvatar;
@@ -55,7 +56,7 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     @BindView(R.id.edit_description) EditText mEditDescription;
     @BindView(R.id.check_aqua) CheckBox mCheckAqua;
     @BindView(R.id.check_mk) CheckBox mCheckMk;
-    @BindView(R.id.check_pin) CheckBox mCheckPin;
+    @BindView(R.id.check_pinata) CheckBox mCheckPinata;
     @BindView(R.id.text_equipment) TextView mTextEquipment;
     @BindView(R.id.text_children_count) TextView mTextChildrenCount;
     // Dimens
@@ -127,22 +128,37 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
 
     @Override
     protected void onViewReady(final Bundle savedInstanceState) {
+        setupAdapters();
+        setupNewOrder();
+        getPresenter().fetchCurrentUser();
+        getPresenter().fetchOrders();
+    }
+
+    private void setupNewOrder() {
+        mSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        RxView.queryTextChanged(mEditPhone).observe(this, mNewOrder::setPhone);
+        RxView.queryTextChanged(mEditName).observe(this, mNewOrder::setName);
+        RxView.queryTextChanged(mEditDescription).observe(this, mNewOrder::setDescription);
+        RxView.queryIntChanged(mEditIncome).observe(this, mNewOrder::setIncome);
+        RxView.queryIntChanged(mEditExpense).observe(this, mNewOrder::setExpense);
+        RxView.queryCheckedChanged(mCheckAqua).observe(this, mNewOrder::setAqua);
+        RxView.queryCheckedChanged(mCheckMk).observe(this, mNewOrder::setMk);
+        RxView.queryCheckedChanged(mCheckPinata).observe(this, mNewOrder::setPinata);
+    }
+
+    private void setupAdapters() {
         mUpcomingAdapter = new UpcomingPagerAdapter(getSupportFragmentManager());
 //        mViewPagerUpcoming.setPageTransformer(true, new ZoomOutTransformation());
         mViewPagerUpcoming.setAdapter(mUpcomingAdapter);
         mViewPagerUpcoming.setClipToPadding(false);
         mViewPagerUpcoming.setPadding(mMargin32, 0, mMargin32, 0);
         mViewPagerUpcoming.setPageMargin(mMargin16);
-        mSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
-        mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         mRecyclerPastOrders.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerPastOrders.setAdapter(mPastAdapter);
-//        ImageLoader.loadCirclePhoto("http://somephoto.jpg", mImageClientAvatar);
-        getPresenter().fetchCurrentUser();
-        getPresenter().fetchOrders();
     }
 
-    @OnClick({R.id.text_date, R.id.text_time, R.id.text_hrs_minus, R.id.text_hrs_plus, R.id.card_save, R.id.card_cancel, R.id.text_equipment, R.id.children_count_minus, R.id.children_count_plus})
+    @OnClick({R.id.text_date, R.id.text_time, R.id.text_hrs_minus, R.id.text_hrs_plus, R.id.image_save, R.id.image_cancel, R.id.text_equipment, R.id.children_count_minus, R.id.children_count_plus})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.text_date:
@@ -178,13 +194,17 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
                 mNewOrder.incrementDuration();
                 mTextDuration.setText(String.format(Locale.US, "%.1f h", (mNewOrder.getDuration() * 0.5f)));
                 break;
-            case R.id.card_save:
+            case R.id.image_save:
+                mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                getPresenter().saveOrder(mNewOrder);
+                mNewOrder = new Order();
                 break;
-            case R.id.card_cancel:
+            case R.id.image_cancel:
                 mNewOrder = new Order();
                 mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 break;
             case R.id.text_equipment:
+                // todo show equipment list
                 break;
             case R.id.children_count_minus:
                 mNewOrder.decrementChildren();

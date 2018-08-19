@@ -1,4 +1,4 @@
-package com.ruslanlyalko.agency.presentation.ui.dashboard.adapter;
+package com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.past;
 
 import android.view.View;
 

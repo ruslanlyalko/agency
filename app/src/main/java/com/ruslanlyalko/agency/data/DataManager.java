@@ -17,7 +17,9 @@ public interface DataManager {
 
     MutableLiveData<User> getUser(String key);
 
-    MutableLiveData<List<Order>> getPastOrders(String userId);
+    MutableLiveData<List<Order>> getPastOrders();
 
-    MutableLiveData<List<Order>> getFutureOrders(String userId);
+    MutableLiveData<List<Order>> getFutureOrders();
+
+    void saveOrder(Order newOrder);
 }

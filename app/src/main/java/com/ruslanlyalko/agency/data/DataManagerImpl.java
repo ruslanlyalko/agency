@@ -74,7 +74,21 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public MutableLiveData<List<Order>> getPastOrders(final String userId) {
+    public MutableLiveData<List<Order>> getPastOrders() {
+        return getPastOrders(mAuth.getUid());
+    }
+
+    @Override
+    public MutableLiveData<List<Order>> getFutureOrders() {
+        return getFutureOrders(mAuth.getUid());
+    }
+
+    @Override
+    public void saveOrder(final Order newOrder) {
+        saveOrder(mAuth.getUid(), newOrder);
+    }
+
+    private MutableLiveData<List<Order>> getPastOrders(final String userId) {
         final MutableLiveData<List<Order>> result = new MutableLiveData<>();
         if (TextUtils.isEmpty(userId)) {
             Log.w(TAG, "getPastOrders has wrong argument");
@@ -103,8 +117,7 @@ public class DataManagerImpl implements DataManager {
         return result;
     }
 
-    @Override
-    public MutableLiveData<List<Order>> getFutureOrders(final String userId) {
+    private MutableLiveData<List<Order>> getFutureOrders(final String userId) {
         final MutableLiveData<List<Order>> result = new MutableLiveData<>();
         if (TextUtils.isEmpty(userId)) {
             Log.w(TAG, "getFutureOrders has wrong argument");
@@ -131,5 +144,19 @@ public class DataManagerImpl implements DataManager {
                     }
                 });
         return result;
+    }
+
+    private void saveOrder(final String userId, final Order newOrder) {
+        if (newOrder.getKey() == null) {
+            newOrder.setKey(mDatabase.getReference(Config.DB_USERS_DATA)
+                    .child(userId)
+                    .child(Config.DB_ORDERS)
+                    .push().getKey());
+        }
+        mDatabase.getReference(Config.DB_USERS_DATA)
+                .child(userId)
+                .child(Config.DB_ORDERS)
+                .child(newOrder.getKey())
+                .setValue(newOrder);
     }
 }

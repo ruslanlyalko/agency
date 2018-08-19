@@ -16,4 +16,6 @@
     <string name="text_choose_equipment">[ choose ]</string>
     <string name="text_save">Save</string>
     <string name="text_cancel">Cancel</string>
+    <string name="text_minus">-</string>
+    <string name="text_plus">+</string>
 </resources>

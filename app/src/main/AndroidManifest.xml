@@ -26,7 +26,7 @@
             android:name=".presentation.ui.dashboard.DashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Dashboard"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".presentation.ui.login.LoginActivity"
             android:screenOrientation="portrait" />

@@ -1,4 +1,4 @@
-package com.ruslanlyalko.agency.presentation.ui.dashboard.fragment;
+package com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.future;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
