@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="520dp"
     android:clickable="true"
+    android:elevation="4dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:paddingEnd="12dp"
@@ -41,7 +42,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:elevation="5dp"
-                    android:src="@drawable/bg_image" />
+                    android:src="@drawable/bg_image"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/image_cancel"
@@ -51,7 +53,8 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:padding="12dp"
-                    android:src="@drawable/ic_close_24dp" />
+                    android:src="@drawable/ic_close_24dp"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/image_save"
@@ -62,14 +65,15 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:padding="12dp"
-                    android:src="@drawable/ic_check_24dp" />
+                    android:src="@drawable/ic_check_24dp"
+                    tools:ignore="ContentDescription" />
 
                 <EditText
                     android:id="@+id/edit_name"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="37dp"
                     android:backgroundTint="@android:color/transparent"
                     android:drawablePadding="4dp"
                     android:drawableStart="@drawable/ic_person_24dp"
@@ -110,10 +114,10 @@
                     android:focusable="true"
                     android:paddingBottom="4dp"
                     android:paddingTop="4dp"
-                    android:text="Jun 12"
                     android:textAppearance="@style/TextAppearance.Body2"
                     android:textColor="@color/color_selector_gray"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="Jun 12" />
 
                 <TextView
                     android:id="@+id/text_time"
@@ -128,10 +132,10 @@
                     android:gravity="end"
                     android:paddingBottom="4dp"
                     android:paddingTop="4dp"
-                    android:text="16:00"
                     android:textAppearance="@style/TextAppearance.Body2"
                     android:textColor="@color/color_selector_gray"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="16:00" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -148,7 +152,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center"
-                        android:text="-"
+                        android:text="@string/text_minus"
                         android:textAppearance="@style/TextAppearance.Body1"
                         android:textColor="@color/colorTextWhite" />
 
@@ -158,9 +162,9 @@
                         android:layout_height="36dp"
                         android:background="@color/colorAccent"
                         android:gravity="center"
-                        android:text="1.5 h"
                         android:textAppearance="@style/TextAppearance.Body1"
-                        android:textColor="@color/colorTextWhite" />
+                        android:textColor="@color/colorTextWhite"
+                        tools:text="1.5 h" />
 
                     <TextView
                         android:id="@+id/text_hrs_plus"
@@ -170,7 +174,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center"
-                        android:text="+"
+                        android:text="@string/text_plus"
                         android:textAppearance="@style/TextAppearance.Body1"
                         android:textColor="@color/colorTextWhite" />
                 </LinearLayout>
@@ -389,7 +393,7 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:gravity="center"
-                            android:text="-"
+                            android:text="@string/text_minus"
                             android:textAppearance="@style/TextAppearance.Body1"
                             android:textColor="@color/colorTextWhite" />
 
@@ -399,9 +403,9 @@
                             android:layout_height="36dp"
                             android:background="@color/colorAccent"
                             android:gravity="center"
-                            android:text="7"
                             android:textAppearance="@style/TextAppearance.Body1"
-                            android:textColor="@color/colorTextWhite" />
+                            android:textColor="@color/colorTextWhite"
+                            tools:text="7" />
 
                         <TextView
                             android:id="@+id/children_count_plus"
@@ -411,7 +415,7 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:gravity="center"
-                            android:text="+"
+                            android:text="@string/text_plus"
                             android:textAppearance="@style/TextAppearance.Body1"
                             android:textColor="@color/colorTextWhite" />
                     </LinearLayout>

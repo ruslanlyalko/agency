@@ -2,6 +2,7 @@ package com.ruslanlyalko.agency.data;
 
 import android.arch.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.Task;
 import com.ruslanlyalko.agency.data.models.Order;
 import com.ruslanlyalko.agency.data.models.User;
 
@@ -21,5 +22,5 @@ public interface DataManager {
 
     MutableLiveData<List<Order>> getFutureOrders();
 
-    void saveOrder(Order newOrder);
+    Task<Void> saveOrder(Order newOrder);
 }

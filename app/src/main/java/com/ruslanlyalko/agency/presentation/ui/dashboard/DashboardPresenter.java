@@ -1,5 +1,6 @@
 package com.ruslanlyalko.agency.presentation.ui.dashboard;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.ruslanlyalko.agency.data.models.Order;
 import com.ruslanlyalko.agency.presentation.base.BasePresenter;
 
@@ -22,6 +23,8 @@ public class DashboardPresenter extends BasePresenter<DashboardView> {
     }
 
     public void saveOrder(final Order newOrder) {
-        getDataManager().saveOrder(newOrder);
+        getDataManager().saveOrder(newOrder).addOnSuccessListener(aVoid -> {
+            getView().hideBottomSheet();
+        });
     }
 }

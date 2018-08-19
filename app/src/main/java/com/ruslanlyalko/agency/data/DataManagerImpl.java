@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -84,8 +85,8 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
-    public void saveOrder(final Order newOrder) {
-        saveOrder(mAuth.getUid(), newOrder);
+    public Task<Void> saveOrder(final Order newOrder) {
+        return saveOrder(mAuth.getUid(), newOrder);
     }
 
     private MutableLiveData<List<Order>> getPastOrders(final String userId) {
@@ -146,14 +147,14 @@ public class DataManagerImpl implements DataManager {
         return result;
     }
 
-    private void saveOrder(final String userId, final Order newOrder) {
+    private Task<Void> saveOrder(final String userId, final Order newOrder) {
         if (newOrder.getKey() == null) {
             newOrder.setKey(mDatabase.getReference(Config.DB_USERS_DATA)
                     .child(userId)
                     .child(Config.DB_ORDERS)
                     .push().getKey());
         }
-        mDatabase.getReference(Config.DB_USERS_DATA)
+        return mDatabase.getReference(Config.DB_USERS_DATA)
                 .child(userId)
                 .child(Config.DB_ORDERS)
                 .child(newOrder.getKey())

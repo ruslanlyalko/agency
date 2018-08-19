@@ -24,14 +24,9 @@ public class UpcomingPagerAdapter extends FragmentStatePagerAdapter {
         mOnItemClickListener = onItemClickListener;
     }
 
-    public void setData(final List<Order> data) {
-        mData = data;
-        notifyDataSetChanged();
-    }
-
     @Override
     public int getCount() {
-        return mData.size();
+        return mData.size() > 0 ? mData.size() : 1;
     }
 
     @Override
@@ -41,10 +36,17 @@ public class UpcomingPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(final int i) {
+        if (i == mData.size())
+            return UpcomingPlaceholderFragment.newInstance();
         return UpcomingFragment.newInstance(mData.get(i), i, mOnItemClickListener);
     }
 
     public List<Order> getData() {
         return mData;
+    }
+
+    public void setData(final List<Order> data) {
+        mData = data;
+        notifyDataSetChanged();
     }
 }

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,9 @@ import android.widget.TextView;
 import com.ruslanlyalko.agency.R;
 import com.ruslanlyalko.agency.data.models.Order;
 import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.past.OnItemClickListener;
+import com.ruslanlyalko.agency.presentation.utils.DateUtils;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +33,10 @@ public class UpcomingFragment extends Fragment {
     private static OnItemClickListener mOnItemClickListener;
     @BindView(R.id.text_title) TextView mTextTitle;
     @BindView(R.id.text_subtitle) TextView mTextSubtitle;
+    @BindView(R.id.card) CardView mCard;
+    @BindView(R.id.text_date_time) TextView mTextDateTime;
+    @BindView(R.id.text_balance) TextView mTextBalance;
+
     private int mPosition;
     private Order mOrder;
 
@@ -59,8 +68,31 @@ public class UpcomingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mTextTitle.setText(mOrder.getClientNamePhone());
-        mTextSubtitle.setText(mOrder.getDescription());
+        mTextTitle.setText(mOrder.getClientNamePhoneTwoLines());
+        String description = String.format(Locale.US, "%s: %s;  ",
+                getString(R.string.text_durations), mOrder.getDurationFormatted());
+        description = description + String.format(Locale.US, "%s: %s\n",
+                getString(R.string.text_children_count), mOrder.getChildrenFormatted());
+        if (mOrder.getAqua() || mOrder.getMk() || mOrder.getPinata()) {
+            String checks = "";
+            if (mOrder.getAqua())
+                checks = checks + " " + getString(R.string.text_check_aqua);
+            if (mOrder.getMk())
+                checks = checks + " " + getString(R.string.text_check_mk);
+            if (mOrder.getPinata())
+                checks = checks + " " + getString(R.string.text_check_pin);
+            description = description + "(" + checks.trim() + ")\n";
+        }
+        if (!TextUtils.isEmpty(mOrder.getDescription()))
+            description = description + mOrder.getDescription() + "\n";
+        mTextSubtitle.setText(description);
+        mTextDateTime.setText(DateUtils.toStringDateTime(getContext(), mOrder.getDate()));
+        if (mOrder.getIncome() != 0 || mOrder.getExpense() != 0) {
+            String balance = String.format(Locale.US, "%s  %s", mOrder.getIncomeFormatted(), mOrder.getExpenseFormatted());
+            mTextBalance.setText(balance);
+        } else {
+            mTextBalance.setText("");
+        }
     }
 
     @OnClick(R.id.card)

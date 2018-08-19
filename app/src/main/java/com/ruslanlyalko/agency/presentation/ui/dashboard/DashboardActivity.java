@@ -74,21 +74,22 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     public void showUser(final MutableLiveData<User> user) {
         user.observe(this, user1 -> {
             if (user1 == null) return;
-            mTextBalance.setText(String.valueOf(user1.getBalance()));
-            mTextIncome.setText(String.valueOf(user1.getIncome()));
-            mTextExpense.setText(String.valueOf(user1.getExpense()));
+            mTextBalance.setText(user1.getBalanceFormatted());
+            mTextIncome.setText(user1.getIncomeFormatted());
+            mTextExpense.setText(user1.getExpenseFormatted());
         });
     }
 
     @Override
     public void showOrder(final Order order) {
+        mTextDate.requestFocus();
         mCurrentOrder = order;
         mEditPhone.setText(order.getPhone());
         mEditName.setText(order.getName());
         mTextDate.setText(DateUtils.toStringDate(order.getDate()));
         mTextTime.setText(DateUtils.toStringTime(order.getDate()));
-        mEditIncome.setText(order.getIncomeFormatted());
-        mEditExpense.setText(order.getExpenseFormatted());
+        mEditIncome.setText(String.valueOf(order.getIncome()));
+        mEditExpense.setText(String.valueOf(order.getExpense()));
         mTextDuration.setText(order.getDurationFormatted());
         mEditDescription.setText(order.getDescription());
         mCheckAqua.setChecked(order.getAqua());
@@ -106,6 +107,11 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     @Override
     public void showPastOrders(final MutableLiveData<List<Order>> pastOrders) {
         pastOrders.observe(this, orders -> mPastAdapter.setData(orders));
+    }
+
+    @Override
+    public void hideBottomSheet() {
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
     @OnClick({R.id.image_logo, R.id.image_calendar, R.id.image_notifications, R.id.text_add_more})
@@ -129,8 +135,8 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
         mSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull final View view, final int state) {
-                mEditName.setEnabled(state != BottomSheetBehavior.STATE_COLLAPSED);
-                mEditPhone.setEnabled(state != BottomSheetBehavior.STATE_COLLAPSED);
+                mEditName.setEnabled(state == BottomSheetBehavior.STATE_EXPANDED);
+                mEditPhone.setEnabled(state == BottomSheetBehavior.STATE_EXPANDED);
             }
 
             @Override
@@ -177,7 +183,6 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
                 break;
             case R.id.image_save:
                 hideKeyboard();
-                mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 mCurrentOrder.setDescription(mEditDescription.getText().toString().trim());
                 mCurrentOrder.setPhone(mEditPhone.getText().toString().trim());
                 mCurrentOrder.setName(mEditName.getText().toString().trim());

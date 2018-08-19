@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -242,17 +243,23 @@ public class Order extends BaseModel implements Parcelable {
             children -= 1;
     }
 
-    public String getExpenseFormatted() {
-        return String.valueOf(expense);
+    public String getIncomeFormatted() {
+        return "+" + NumberFormat.getCurrencyInstance().format(income);
     }
 
-    public String getIncomeFormatted() {
-        return String.valueOf(income);
+    public String getExpenseFormatted() {
+        return "-" + NumberFormat.getCurrencyInstance().format(expense);
     }
 
     public String getClientNamePhone() {
         if (name == null) name = "";
         if (phone == null) phone = "";
         return String.format("%s %s", name, phone);
+    }
+
+    public String getClientNamePhoneTwoLines() {
+        if (name == null) name = "";
+        if (phone == null) phone = "";
+        return String.format("%s\n%s", name, phone);
     }
 }

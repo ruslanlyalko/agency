@@ -1,21 +1,27 @@
 <resources>
-    <string name="app_name">Agency</string>
+    <string name="app_name" translatable="false">Agency Manager</string>
+    <string name="text_minus" translatable="false">-</string>
+    <string name="text_plus" translatable="false">+</string>
+    <string name="hint_description"> Type any description here</string>
+    <string name="hint_client_name">Client name</string>
+    <string name="hint_phone_number">Phone number</string>
+    <string name="text_zero">0</string>
     <string name="text_orders">Orders</string>
     <string name="text_add_more">ADD MORE +</string>
     <string name="text_your_balance">your balance</string>
     <string name="text_income">Income</string>
     <string name="text_expense">Expense</string>
-    <string name="hint_description"> Type any description here</string>
     <string name="text_children_count">Children count</string>
     <string name="text_check_aqua">Aqua-grim</string>
     <string name="text_check_mk">Master-class</string>
     <string name="text_check_pin">Pinata</string>
-    <string name="hint_client_name">Client name</string>
-    <string name="hint_phone_number">Phone number</string>
-    <string name="text_zero">0</string>
     <string name="text_choose_equipment">[ choose ]</string>
     <string name="text_save">Save</string>
     <string name="text_cancel">Cancel</string>
-    <string name="text_minus">-</string>
-    <string name="text_plus">+</string>
+    <string name="text_durations">Duration</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="text_upcoming_placeholder">Add new order by pressing \"ADD MORE +\"</string>
+
 </resources>

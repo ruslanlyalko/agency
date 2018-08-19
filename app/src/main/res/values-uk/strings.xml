@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hint_description"> Введіть опис тут</string>
+    <string name="hint_client_name">Ім\'я клієнта</string>
+    <string name="hint_phone_number">Телефон</string>
+    <string name="text_zero">0</string>
+    <string name="text_orders">Замовлення</string>
+    <string name="text_add_more">ДОБАВИТИ +</string>
+    <string name="text_your_balance">Ваш баланс</string>
+    <string name="text_income">Дохід</string>
+    <string name="text_expense">Витрати</string>
+    <string name="text_children_count">Кількість дітей</string>
+    <string name="text_check_aqua">Аква-грим</string>
+    <string name="text_check_mk">Майстер-клас</string>
+    <string name="text_check_pin">Піньята</string>
+    <string name="text_choose_equipment">[ виберіть ]</string>
+    <string name="text_save">Зберегти</string>
+    <string name="text_cancel">Скасувати</string>
+    <string name="text_durations">Тривалість</string>
+    <string name="today">Сьогодні</string>
+    <string name="yesterday">Вчора</string>
+    <string name="tomorrow">Затвра</string>
+    <string name="text_upcoming_placeholder">"Добавте нове замовлення натиснувши \"ДОБАВИТИ +\""</string>
+
+</resources>
