@@ -48,8 +48,9 @@ public class Order extends BaseModel implements Parcelable {
         calendar.setTime(new Date());
         calendar.set(Calendar.HOUR_OF_DAY, 16);
         calendar.set(Calendar.MINUTE, 0);
-        userId = FirebaseAuth.getInstance().getUid();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
         date = calendar.getTime();
+        userId = FirebaseAuth.getInstance().getUid();
     }
 
     protected Order(Parcel in) {
