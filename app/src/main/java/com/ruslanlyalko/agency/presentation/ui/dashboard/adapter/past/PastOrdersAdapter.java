@@ -14,7 +14,6 @@ import com.ruslanlyalko.agency.presentation.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +25,7 @@ import butterknife.OnClick;
  */
 public class PastOrdersAdapter extends RecyclerView.Adapter<PastOrdersAdapter.ViewHolder> {
 
+    private static final int TYPE_PLACEHOLDER = 1;
     private final OnItemClickListener mOnItemClickListener;
     private List<Order> mData = new ArrayList<>();
 
@@ -46,6 +46,11 @@ public class PastOrdersAdapter extends RecyclerView.Adapter<PastOrdersAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent,
                                          int viewType) {
+        if (viewType == TYPE_PLACEHOLDER) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_past_order_placeholder, parent, false);
+            return new ViewHolder(v);
+        }
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_past_order, parent, false);
         return new ViewHolder(v);
@@ -53,12 +58,20 @@ public class PastOrdersAdapter extends RecyclerView.Adapter<PastOrdersAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(mData.get(position));
+        if (position < mData.size())
+            holder.bind(mData.get(position));
+    }
+
+    @Override
+    public int getItemViewType(final int position) {
+        if (position == mData.size())
+            return TYPE_PLACEHOLDER;
+        return super.getItemViewType(position);
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData.size() > 0 ? mData.size() : 1;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -78,8 +91,8 @@ public class PastOrdersAdapter extends RecyclerView.Adapter<PastOrdersAdapter.Vi
         public void bind(final Order order) {
             mTextTitle.setText(order.getClientNamePhone());
             mTextSubtitle.setText(order.getDescription());
-            mTextIncome.setText(String.format(Locale.US, "+$%d", order.getIncome()));
-            mTextExpense.setText(String.format(Locale.US, "-$%d", order.getExpense()));
+            mTextIncome.setText(order.getIncomeFormatted());
+            mTextExpense.setText(order.getExpenseFormatted());
             mTextDate.setText(DateUtils.toStringDate(order.getDate()));
         }
 

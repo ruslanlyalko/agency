@@ -11,7 +11,7 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.6"
+        android:alpha="0.5"
         app:cardCornerRadius="10dp" />
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_toStartOf="@+id/text_date_time"
         android:padding="4dp"
         android:textAppearance="@style/TextAppearance.Body2"
-        android:textColor="@color/colorTextBlackDark"
+        android:textColor="@color/colorTextWhite"
         android:textStyle="bold"
         tools:text="SOME DESCRIPTION HERE"
         />
@@ -38,9 +38,8 @@
         android:layout_marginTop="4dp"
         android:gravity="end"
         android:padding="4dp"
-        android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.Body2"
-        android:textColor="@color/colorTextBlackDark"
+        android:textColor="@color/colorTextWhite"
         android:textStyle="bold"
         tools:text="JUN 12, 14:00"
         />
@@ -51,7 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_title"
         android:layout_marginStart="16dp"
-        android:lineSpacingExtra="4sp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="3sp"
+        android:maxLines="5"
         android:padding="4dp"
         android:textAppearance="@style/TextAppearance.Body2"
         android:textColor="@color/colorTextWhite"

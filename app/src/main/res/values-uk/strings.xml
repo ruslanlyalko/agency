@@ -21,5 +21,6 @@
     <string name="yesterday">Вчора</string>
     <string name="tomorrow">Затвра</string>
     <string name="text_upcoming_placeholder">"Добавте нове замовлення натиснувши \"ДОБАВИТИ +\""</string>
+    <string name="text_past_placeholder">Минулі замовленя будуть показуватись тут</string>
 
 </resources>

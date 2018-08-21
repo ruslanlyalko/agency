@@ -23,5 +23,6 @@
     <string name="yesterday">Yesterday</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="text_upcoming_placeholder">Add new order by pressing \"ADD MORE +\"</string>
+    <string name="text_past_placeholder">Past orders will be shown up here</string>
 
 </resources>
