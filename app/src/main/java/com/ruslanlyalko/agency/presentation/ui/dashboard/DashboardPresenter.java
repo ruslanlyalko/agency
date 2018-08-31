@@ -27,4 +27,12 @@ public class DashboardPresenter extends BasePresenter<DashboardView> {
             getView().hideBottomSheet();
         });
     }
+
+    public void onUpcomingLongClicked(final int position) {
+        getView().showUpcomingMenu(position);
+    }
+
+    public void onPastLongClicked(final int position) {
+        getView().showPastMenu(position);
+    }
 }

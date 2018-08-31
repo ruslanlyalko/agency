@@ -21,6 +21,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * Created by Ruslan Lyalko
@@ -99,5 +100,11 @@ public class UpcomingFragment extends Fragment {
     public void onClick(View v) {
         if (mOnItemClickListener != null)
             mOnItemClickListener.onItemClicked(v, mPosition);
+    }
+
+    @OnLongClick(R.id.card)
+    public void onLongClick(View v) {
+        if (mOnItemClickListener != null)
+            mOnItemClickListener.onItemLongClicked(v, mPosition);
     }
 }

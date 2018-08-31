@@ -27,7 +27,7 @@ public class BasePresenter<V extends BaseView> {
         mBaseActivity = null;
     }
 
-    public V getView() {
+    protected V getView() {
         return mBaseActivity;
     }
 

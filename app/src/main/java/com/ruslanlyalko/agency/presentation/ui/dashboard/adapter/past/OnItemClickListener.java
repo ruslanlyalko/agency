@@ -10,4 +10,5 @@ import android.view.View;
 public interface OnItemClickListener {
 
     void onItemClicked(View view, final int position);
+    void onItemLongClicked(View view, final int position);
 }

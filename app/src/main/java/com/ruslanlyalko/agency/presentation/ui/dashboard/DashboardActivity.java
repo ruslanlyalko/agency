@@ -19,6 +19,7 @@ import com.ruslanlyalko.agency.R;
 import com.ruslanlyalko.agency.data.models.Order;
 import com.ruslanlyalko.agency.data.models.User;
 import com.ruslanlyalko.agency.presentation.base.BaseActivity;
+import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.past.OnItemClickListener;
 import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.past.PastOrdersAdapter;
 import com.ruslanlyalko.agency.presentation.ui.dashboard.adapter.upcoming.UpcomingPagerAdapter;
 import com.ruslanlyalko.agency.presentation.utils.DateUtils;
@@ -114,6 +115,17 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
         mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
+    @Override
+    public void showUpcomingMenu(final int position) {
+        Order order = mUpcomingAdapter.getData().get(position);
+
+    }
+
+    @Override
+    public void showPastMenu(final int position) {
+        //todo
+    }
+
     @OnClick({R.id.image_logo, R.id.image_calendar, R.id.image_notifications, R.id.text_add_more})
     public void onTopClick(View view) {
         switch (view.getId()) {
@@ -195,10 +207,7 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
                 break;
             case R.id.image_cancel:
                 hideKeyboard();
-                if (mSheetBehavior.getState() != BottomSheetBehavior.STATE_COLLAPSED)
-                    mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                else
-                    mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                mSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 break;
             case R.id.text_equipment:
                 // todo show equipment list
@@ -215,15 +224,33 @@ public class DashboardActivity extends BaseActivity<DashboardPresenter> implemen
     }
 
     private void setupAdapters() {
-        mUpcomingAdapter = new UpcomingPagerAdapter(getSupportFragmentManager(),
-                (view, position) -> showOrder(mUpcomingAdapter.getData().get(position)));
+        mUpcomingAdapter = new UpcomingPagerAdapter(getSupportFragmentManager(), new OnItemClickListener() {
+            @Override
+            public void onItemClicked(final View view, final int position) {
+                showOrder(mUpcomingAdapter.getData().get(position));
+            }
+
+            @Override
+            public void onItemLongClicked(final View view, final int position) {
+                getPresenter().onUpcomingLongClicked(position);
+            }
+        });
 //        mViewPagerUpcoming.setPageTransformer(true, new ZoomOutTransformation());
         mViewPagerUpcoming.setAdapter(mUpcomingAdapter);
         mViewPagerUpcoming.setClipToPadding(false);
         mViewPagerUpcoming.setPadding(mMargin32, 0, mMargin32, 0);
         mViewPagerUpcoming.setPageMargin(mMargin16);
-        mPastAdapter = new PastOrdersAdapter(
-                (view, position) -> showOrder(mPastAdapter.getData().get(position)));
+        mPastAdapter = new PastOrdersAdapter(new OnItemClickListener() {
+            @Override
+            public void onItemClicked(final View view, final int position) {
+                showOrder(mPastAdapter.getData().get(position));
+            }
+
+            @Override
+            public void onItemLongClicked(final View view, final int position) {
+                getPresenter().onPastLongClicked(position);
+            }
+        });
         mRecyclerPastOrders.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerPastOrders.setAdapter(mPastAdapter);
     }

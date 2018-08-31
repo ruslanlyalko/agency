@@ -23,4 +23,8 @@ public interface DashboardView extends BaseView<DashboardPresenter> {
     void showPastOrders(MutableLiveData<List<Order>> pastOrders);
 
     void hideBottomSheet();
+
+    void showUpcomingMenu(int position);
+
+    void showPastMenu(int position);
 }

@@ -18,6 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * Created by Ruslan Lyalko
@@ -100,6 +101,12 @@ public class PastOrdersAdapter extends RecyclerView.Adapter<PastOrdersAdapter.Vi
         void onClicked(View view) {
             if (mOnItemClickListener != null)
                 mOnItemClickListener.onItemClicked(view, getAdapterPosition());
+        }
+
+        @OnLongClick(R.id.layout_root)
+        public void onLongClick(View v) {
+            if (mOnItemClickListener != null)
+                mOnItemClickListener.onItemLongClicked(v, getAdapterPosition());
         }
     }
 }
